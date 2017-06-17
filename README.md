@@ -1,4 +1,4 @@
-<h1>Final Project WAA Web Application Architecture- Marter in Computer Science - MUM </h1>
+<h1>Final Project WAA Web Application Architecture- Master in Computer Science - MUM </h1>
 
 <h2>Coffe Shop Application</h2>
 Tecnologies:
