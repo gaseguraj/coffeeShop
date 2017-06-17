@@ -1,7 +1,7 @@
 <h1>Final Project WAA Web Application Architecture- Master in Computer Science - MUM </h1>
 
 <h2>Coffe Shop Application</h2>
-Tecnologies:
+Technologies:
 <ul>
 <li>Spring MVC</li>
 <li>Spring Boot</li>
