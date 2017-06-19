@@ -7,6 +7,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 @Table(name = "Orderline")
 public class Orderline {
@@ -17,6 +20,8 @@ public class Orderline {
 	private int quantity;
 	@OneToOne
 	private Product product;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne
 	private Order order;
 

@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 @Table(name = "OrderTable")
 public class Order {
@@ -26,6 +29,7 @@ public class Order {
 	@Temporal(TemporalType.DATE)
 	private Date orderDate;
 
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Orderline> orderLines = new ArrayList<Orderline>();
 	@OneToOne
