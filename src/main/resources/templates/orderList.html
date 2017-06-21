@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spring Boot Thymeleaf Hello World Example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+</head>
+<body>
+	<div class="container">
+		<div>
+			<a href="../order/new">Create Order</a>
+			<a href="../order/all">List Orders</a>
+		</div>
+	
+		<!-- Orders -->
+		<div th:if="${not #lists.isEmpty(orders)}">
+			<h2>Orders</h2>
+			<table class="table table-striped">
+				<thead>
+		        <tr>
+		        	<th>Date</th>
+		            <th>Client</th>
+		            <th>Order</th>
+		        </tr>
+		    </thead>
+				<tr th:each="order : ${orders}">
+					<td th:text="${order.orderDate}"></td>
+					<td th:text="${order.person.firstName} + ' ' + ${order.person.lastName}"></td>
+					<td>
+						<!-- Order Line -->
+						<div th:if="${not #lists.isEmpty(order.orderLines)}">
+						<table class="table table-striped">
+							<thead>
+						        <tr>
+						        	<th>Quantity</th>
+						            <th>Product</th>
+						        </tr>
+							    </thead>
+							<tr th:each="line : ${order.orderLines}">
+								<td th:text="${line.quantity}"></td>
+								<td th:text="${line.product.productName}"></td>
+						    </tr>
+						</table>
+						</div>
+						<!-- Order Line -->
+					</td>
+			    </tr>
+			</table>
+		</div>
+		<!-- Orders -->
+		
+	</div><!-- Container -->
+
+</body>
+</html>

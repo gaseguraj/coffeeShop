@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spring Boot Thymeleaf Hello World Example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+</head>
+<body>
+	<div class="container">
+		<div>
+			<a href="../product/new">Create Product</a>
+			<a href="../product/all">List Products</a>
+		</div>
+	
+		<!-- Teams -->
+		<div th:if="${not #lists.isEmpty(products)}">
+			<h2>Products</h2>
+			<table class="table table-striped">
+				<thead>
+		        <tr>
+		        	<th>Type</th>
+		            <th>Name</th>
+		            <th>Description</th>
+		            <th>Price</th>
+		            <th>Action</th>
+		        </tr>
+		    </thead>
+				<tr th:each="product : ${products}">
+					<td th:text="${product.productType}"></td>
+			        <td th:text="${product.productName}"></td>
+			        <td th:text="${product.description}"></td>
+			        <td th:text="${product.price}"></td>
+			        <td><a th:href="@{'../product/' + ${product.id}}">Edit</a> &nbsp; <a th:href="@{'../product/delete/' + ${product.id}}">Delete</a></td>
+
+			    </tr>
+			</table>
+		</div>
+		<!-- Teams -->
+		
+	</div><!-- Container -->
+
+</body>
+</html>

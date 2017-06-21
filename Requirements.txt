@@ -12,7 +12,7 @@ spring.jpa.hibernate.ddl-auto=create
 Use the services provided to:
 - Create, List, Delete, Update products  	OK
 - Create, List, Update persons				OK
-- Create and List orders					OK with errores
+- Create and List orders					OK Orders is not persisting
 
 Your web application has to:
 - Provide a REST API to perform the operations above listed  	OK
@@ -21,12 +21,13 @@ Your web application has to:
 Provide a web application (if you use REST services to create your pages with JavaScript, do not implement this technique in more than 20% of your pages)
 - A public area, where visitors can see the list of products
 - Users can login to:
-- Place orders
-- Update their personal information (Users will be related to persons by email)
+	- Place orders
+	- Update their personal information (Users will be related to persons by email)		OK
 - Administrators can login to:
-- Maintain the list of products
-- Create and List persons
-- List Orders
+	- Maintain the list of products  	OK
+	- Create and List persons			OK
+	- List Orders						OK
 
-Add a page to allow visitors (in public) to register and become users that could login to place orders. You will need to add database tables and corresponding maintenance code to support this functionality, besides adjusting the authentication provider.
+Add a page to allow visitors (in public) to register and become users that could login to place orders. You will need to add database tables 
+and corresponding maintenance code to support this functionality, besides adjusting the authentication provider.
  
