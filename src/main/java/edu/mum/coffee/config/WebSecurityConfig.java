@@ -35,11 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	.csrf()
     		.disable()
         .authorizeRequests()
-        	.antMatchers(HttpMethod.GET, "/ws/**").anonymous()	
-        	.antMatchers(HttpMethod.POST, "/ws/**").anonymous()
-        	.antMatchers(HttpMethod.PUT, "/ws/**").anonymous() 
-        	.antMatchers(HttpMethod.DELETE, "/ws/**").anonymous()
-        	.antMatchers(HttpMethod.GET, "/images/**").anonymous();
+        	.antMatchers(HttpMethod.GET, "/ws/**").permitAll()	
+        	.antMatchers(HttpMethod.POST, "/ws/**").permitAll()
+        	.antMatchers(HttpMethod.PUT, "/ws/**").permitAll() 
+        	.antMatchers(HttpMethod.DELETE, "/ws/**").permitAll()
+        	.antMatchers(HttpMethod.GET, "/images/**").permitAll();
 		
 		http
         .authorizeRequests()
