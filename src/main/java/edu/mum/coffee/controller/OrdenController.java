@@ -1,3 +1,10 @@
+/**
+ * Controller for the orders, this is used to create new orders and list the orders
+ * Project for the course CS545-WAA - Orlando Arrocha created on 2017/06/21
+ * 
+ * @author German Segura
+ * @version 1.0
+ */
 package edu.mum.coffee.controller;
 
 
@@ -33,15 +40,22 @@ public class OrdenController {
 	Order newOrder;
 	Orderline newOrderline;
 	
-	
-	
+	/**
+	 * Redirect to the list of orders
+	 * 
+	 * @return String redirect
+	 */
 	@RequestMapping("/")
 	@GetMapping
 	public String redirectHome(){
 		return "redirect:/order/all";
 	}
 	
-	
+	/**
+	 * Show the form for create a new order
+	 * 
+	 * @return String View orderOrderList.html
+	 */
 	@RequestMapping("/newOrder")
 	@GetMapping
 	public String redirectNewOrder(Model model){
@@ -51,40 +65,61 @@ public class OrdenController {
 		return "orderOrderlist";
 	}
 	
+	/**
+	 * This code is in charge to create the Orderline objects in memory, and 
+	 * they are going to be displayed on the screen to the user.
+	 * 
+	 * @return String View orderOrderList.html
+	 */
 	@RequestMapping("/orderline")
 	@GetMapping
 	public String createOrderline(@RequestParam(value="productId", required = true) int productId, 
 								  @RequestParam(value="quantity", required = true) 	int quantity,
 								  Model model){
-		
+		//Create object Order
 		if(newOrder == null){
 			newOrder = new Order();
 		}
+		//Create new object Orderline every time
 		newOrderline = new Orderline();	
 		newOrderline.setQuantity(quantity);
 		newOrderline.setProduct(productService.getProduct(productId));
 		
-		System.out.println("New Order line: " + newOrderline);
-		
+		//Add to the list the new Orderline
 		newOrder.addOrderLine(newOrderline);
 		
+		//Add to the model to show the current orderline
 		model.addAttribute("products", productService.getAllProduct());
 		model.addAttribute("newOrder", newOrder);
 		return "orderOrderlist";
 	}
 	
+	/**
+	 * In this method is the order created, needs the id of the current user and 
+	 * the list of Orderlines
+	 * 
+	 * @return String redirect
+	 */
 	@RequestMapping("/create")
 	@PostMapping
 	public String  create(){
+		//Info of the user
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userName = authentication.getName();
+		//Set the person who is creating the order
 		newOrder.setPerson(personService.findById(personService.findByEmail(userName).get(0).getId()));
-		
+		//Set the current date
 		newOrder.setOrderDate(new Date());
+		//Save the order
 		orderService.save(newOrder);
 		return "redirect:/success";
 	}
 	
+	/**
+	 * Retrieve a order by id
+	 * 
+	 * @return String view order.html
+	 */
 	@RequestMapping("/{id}")
 	@GetMapping
 	public String  get(@PathVariable("id") Integer id, Model model){
@@ -92,6 +127,11 @@ public class OrdenController {
 		return "order";
 	}
 	
+	/**
+	 * Display all the orders created in the application
+	 * 
+	 * @return String view orderList.html
+	 */
 	@RequestMapping("/all")
 	@GetMapping
 	public String getAll(Model model){

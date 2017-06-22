@@ -1,3 +1,11 @@
+/**
+ * Controller for anonymous users, can login to the application or see products
+ * Project for the course CS545-WAA - Orlando Arrocha created on 2017/06/21
+ * 
+ * @author German Segura
+ * @version 1.0
+ */
+
 package edu.mum.coffee.controller;
 
 import java.util.List;
@@ -28,7 +36,15 @@ public class HomeController {
 	
 	@Autowired
 	PersonService personService;
-	
+
+	/**
+	 * Show the index of the Web Application and show the products consuming
+	 * the product Restful WebService
+	 * 
+	 * @param model
+	 *            Model to show the information in the Web Page
+	 * @return String index.html
+	 */
 	@GetMapping({"/", "/index", "/home"})
 	@PostMapping("/index")
 	public String homePage(Model model) {
@@ -44,28 +60,43 @@ public class HomeController {
 		return "index";
 	}
 	
+	/**
+	 * Show the login page
+	 * 
+	 * @return String login.html
+	 */
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
 
-	@GetMapping({"/secure"})
-	public String securePage() {
-		return "secure";
-	}
-	
+	/**
+	 * Show the page success, used after create a new order
+	 * 
+	 * @return String success.html
+	 */
 	@RequestMapping("/success") 
 	@GetMapping
 	public String redirectSuccess(){
 		return "success";
 	}
 	
+	/**
+	 * Show the page to register in the application
+	 * 
+	 * @return String Redirect 
+	 */
 	@RequestMapping("/signup") 
 	@GetMapping
 	public String redirectSignUp(){
 		return "redirect:/person/new";
 	}
 	
+	/**
+	 * Make the logout of the user
+	 * 
+	 * @return String redirect
+	 */
 	@RequestMapping("/logout")
 	@GetMapping
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
@@ -76,6 +107,12 @@ public class HomeController {
 	    return "redirect:/login";
 	}
 	
+	/**
+	 * Show the page with the information of the user, for this is necessary to
+	 * retrieve the information of the logged user 
+	 * 
+	 * @return String redirect 
+	 */
 	@GetMapping({"/myinfo"})
 	public String myInfo() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
