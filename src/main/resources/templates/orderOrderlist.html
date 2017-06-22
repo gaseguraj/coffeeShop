@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  	layout:decorate="~{header}">
+<head>
+<title>Spring Boot Thymeleaf Hello World Example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header">*********MENU*************</div>
+	<div class="container">
+	
+		<!-- Form Create Order -->	
+		<h1>Create Order</h1>
+		<form method="post"  th:action="@{/order/orderline}">
+		  <div class="form-group">
+		    <label for="quantity">Quantity</label>
+		    <input type="number" class="form-control"  name="quantity" required="required" />
+		  </div>
+		  <div class="form-group">
+		    <label for="type">Type</label>
+		  	<select class="form-control" name="productId" required="required">
+		  		<option value="" th:text="@{Select}" ></option>
+    			<option th:each="product : ${products}" th:value="${product.id}" th:text="${product.productName}"></option>
+		  	</select>
+		  </div>
+		  <button type="submit" class="btn btn-default">Submit</button>
+		</form>
+		<!-- Form Create Order -->
+	
+		<!-- Order Line -->
+		<div th:if="${not #lists.isEmpty(newOrder)}">
+			<h2>Orders</h2>
+			<table class="table table-striped">
+				<thead>
+			        <tr>
+			        	<th>Quantity</th>
+			            <th>Product</th>
+			        </tr>
+				    </thead>
+				<tr th:each="line : ${newOrder.orderLines}">
+					<td th:text="${line.quantity}"></td>
+					<td th:text="${line.product.productName}"></td>
+			    </tr>
+			</table>
+			<br/>
+			<!-- Submit Form -->	
+			<form method="post"  th:action="@{/order/create}">
+			  <button type="submit" class="btn btn-default">Submit Order</button>
+			</form>
+			<!-- Submit Order -->
+		</div>
+		<!-- Orders -->
+		
+		
+		
+	</div><!-- Container -->
+
+</body>
+</html>

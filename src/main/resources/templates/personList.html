@@ -9,12 +9,11 @@
           rel="stylesheet" media="screen"/>
 </head>
 <body>
-	<div class="container">
-		<div>
-			<a href="../person/new">Create Person</a>
-			<a href="../person/all">List Person</a>
-		</div>
+
+	<div th:replace="fragments/header :: header">*********MENU*************</div>
 	
+	<div class="container">
+
 		<!-- Teams -->
 		<div th:if="${not #lists.isEmpty(persons)}">
 			<h2>Persons</h2>

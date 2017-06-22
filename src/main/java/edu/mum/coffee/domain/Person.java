@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -14,12 +15,16 @@ public class Person {
 	@Id
 	@GeneratedValue
 	private long id;
+	@NotNull
 	private String firstName;
 	private String lastName;
+	@NotNull
 	private String email;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 	private String phone;
+	@NotNull
+	private String password;
 	private boolean enable;
 
 	public long getId() {
@@ -76,6 +81,14 @@ public class Person {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

@@ -9,11 +9,11 @@
           rel="stylesheet" media="screen"/>
 </head>
 <body>
+	
+	
+	<div th:replace="fragments/header :: header">*********MENU*************</div>
+	
 	<div class="container">
-		<div>
-			<a href="../order/new">Create Order</a>
-			<a href="../order/all">List Orders</a>
-		</div>
 	
 		<!-- Orders -->
 		<div th:if="${not #lists.isEmpty(orders)}">
@@ -32,15 +32,9 @@
 					<td>
 						<!-- Order Line -->
 						<div th:if="${not #lists.isEmpty(order.orderLines)}">
-						<table class="table table-striped">
-							<thead>
-						        <tr>
-						        	<th>Quantity</th>
-						            <th>Product</th>
-						        </tr>
-							    </thead>
+						<table class="table" >
 							<tr th:each="line : ${order.orderLines}">
-								<td th:text="${line.quantity}"></td>
+								<td th:text="@{Quantity: } + ' ' +${line.quantity}"></td>
 								<td th:text="${line.product.productName}"></td>
 						    </tr>
 						</table>

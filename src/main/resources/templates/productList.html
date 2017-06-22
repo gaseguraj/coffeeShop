@@ -9,11 +9,10 @@
           rel="stylesheet" media="screen"/>
 </head>
 <body>
+
+	<div th:replace="fragments/header :: header">*********MENU*************</div>
+	
 	<div class="container">
-		<div>
-			<a href="../product/new">Create Product</a>
-			<a href="../product/all">List Products</a>
-		</div>
 	
 		<!-- Teams -->
 		<div th:if="${not #lists.isEmpty(products)}">

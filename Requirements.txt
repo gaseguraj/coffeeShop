@@ -19,15 +19,16 @@ Your web application has to:
 - A Java client application or web application to demonstrate/test how to consume your REST services
 
 Provide a web application (if you use REST services to create your pages with JavaScript, do not implement this technique in more than 20% of your pages)
-- A public area, where visitors can see the list of products
+- A public area, where visitors can see the list of products							OK
 - Users can login to:
-	- Place orders
+	- Place orders						OK
 	- Update their personal information (Users will be related to persons by email)		OK
 - Administrators can login to:
 	- Maintain the list of products  	OK
 	- Create and List persons			OK
 	- List Orders						OK
 
-Add a page to allow visitors (in public) to register and become users that could login to place orders. You will need to add database tables 
-and corresponding maintenance code to support this functionality, besides adjusting the authentication provider.
+- Add a page to allow visitors (in public) to register and become users that could login to place orders. 
+You will need to add database tables and corresponding maintenance code to support this functionality, 
+besides adjusting the authentication provider.																	OK
  

@@ -57,4 +57,9 @@ public class Orderline {
 		return product.getPrice();
 	}
 
+	@Override
+	public String toString() {
+		return "Orderline [id=" + id + ", quantity=" + quantity + ", product=" + product + ", order=" + order + "]";
+	}
+
 }

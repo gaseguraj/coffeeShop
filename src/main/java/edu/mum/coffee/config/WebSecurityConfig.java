@@ -1,5 +1,7 @@
 package edu.mum.coffee.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,27 +10,66 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	DataSource dataSource;
+	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
+
+		
+		http.formLogin().loginPage("/login").usernameParameter("userId").passwordParameter("password");
+		http.formLogin().defaultSuccessUrl("/index").failureUrl("/login?error");
+		http.logout().logoutSuccessUrl("/login?logout");
+		http.exceptionHandling().accessDeniedPage("/login?accessDenied");
+		http.authorizeRequests().antMatchers("/").permitAll();
+		http.authorizeRequests().antMatchers("/person/new").anonymous();
+		http.authorizeRequests().antMatchers("/person/create").permitAll();
 
 		
 		http
     	.csrf()
     		.disable()
         .authorizeRequests()
-        	.antMatchers("**/**").anonymous();
-    
+        	.antMatchers(HttpMethod.GET, "/ws/**").anonymous()	
+        	.antMatchers(HttpMethod.POST, "/ws/**").anonymous()
+        	.antMatchers(HttpMethod.PUT, "/ws/**").anonymous() 
+        	.antMatchers(HttpMethod.DELETE, "/ws/**").anonymous()
+        	.antMatchers(HttpMethod.GET, "/images/**").anonymous();
 		
-//.antMatchers("/css/**", "/fonts/**", "/js/**", "/images/**", "**/favicon.ico").anonymous()        
+		http
+        .authorizeRequests()
+        	.antMatchers("/product/**").access("hasRole('ROLE_ADMIN')")
+    		.antMatchers("/order/orderNew*").access("hasRole('ROLE_USER')")
+    		.antMatchers("/order/all*").access("hasRole('ROLE_ADMIN')")
+    		.antMatchers("/person/all").access("hasRole('ROLE_ADMIN')")
+    		.antMatchers("/person/**").access("hasRole('ROLE_USER')")
+            .antMatchers("/static/**", "/", "/home", "/index", "/css/**", "/fonts/**", "/js/**", "/images/**", "**/favicon.ico").permitAll()
+            .antMatchers("/static/**", "/css/**", "/fonts/**", "/js/**", "/images/**", "**/favicon.ico").anonymous()
+            ;
     }
 
-		
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	    web
+	       .ignoring()
+	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+	}
 	
+		
+	@Autowired
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+
+	  auth.jdbcAuthentication().dataSource(dataSource)
+		.usersByUsernameQuery(
+			"select email,password, enable from person where email=?")
+		.authoritiesByUsernameQuery(
+			"select name, role from role where name=?");
+	}
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

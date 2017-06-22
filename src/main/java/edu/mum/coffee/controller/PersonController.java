@@ -1,6 +1,9 @@
 package edu.mum.coffee.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import edu.mum.coffee.domain.Person;
+import edu.mum.coffee.domain.Role;
 import edu.mum.coffee.service.PersonService;
 
 @Controller
@@ -37,7 +41,19 @@ public class PersonController {
 	
 	@RequestMapping("/{id}")
 	@GetMapping
-	public String get(@PathVariable("id") long id,  Model model){
+	public String get(@PathVariable("id") Long id,  Model model){
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		String userName = authentication.getName();
+		Person person = personService.findById(personService.findByEmail(userName).get(0).getId());
+		if(!id.equals(person.getId())){
+			boolean hasUserRole = authentication.getAuthorities().stream()
+			          .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+			if(!hasUserRole){
+				return "redirect:/index";	
+			}
+		}
 		model.addAttribute("action", "create");
 		model.addAttribute("title", "Update");
 		model.addAttribute("person",personService.findById(id));
@@ -59,7 +75,12 @@ public class PersonController {
 		System.out.println("Person: " + person);
 		person.setEnable(true);
 		personService.savePerson(person);
-		return "redirect:/person/all";
+		
+		Role role = new Role();
+		role.setName(person.getEmail());
+		role.setRole("ROLE_USER");
+		personService.saveRole(role);
+		return "redirect:/index";
 	}
 	
 

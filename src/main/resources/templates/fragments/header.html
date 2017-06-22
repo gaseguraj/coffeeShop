@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	 
+<head>
+  <title>Coffee Shop</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div th:fragment="header">
+		<nav class="navbar navbar-inverse">
+		  	<div class="container-fluid">
+		    
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Coffee Shop</a>
+		    </div>
+		    
+		    <ul class="nav navbar-nav">
+		    
+		      <li class="active"><a href="/">Home</a></li>
+		      
+		      <li class="dropdown"  sec:authorize="isAuthenticated()">
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Orders <span class="caret"></span></a>
+		        <ul class="dropdown-menu">
+		          <li><a href="/order/newOrder">New Order	</a></li>
+		        </ul>
+		      </li>
+		      
+		      <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
+		        <span class="caret"></span></a>
+		        <ul class="dropdown-menu">
+		          <li><a href="/product/">	 List Products	</a></li>
+		          <li><a href="/product/new">Create Product	</a></li>
+		          <li><a href="/person/all"> List Persons	</a></li>
+		          <li><a href="/order/all">	 List Orders	</a></li>
+		        </ul>
+		      </li>
+		    </ul>
+		    
+		    <ul class="nav navbar-nav navbar-right">
+		      <li sec:authorize="isAuthenticated()"><a href="/myinfo"> <span class="glyphicon glyphicon-pencil"></span> My Info	</a></li>
+		      <li sec:authorize="isAnonymous()">	<a href="/signup"> <span class="glyphicon glyphicon-user"></span> 	Sign Up	</a></li>
+		      <li sec:authorize="isAnonymous()">	<a href="/login">  <span class="glyphicon glyphicon-log-in"></span> Login	</a></li>
+		      <li sec:authorize="isAuthenticated()"><a href="/logout"> <span class="glyphicon glyphicon-log-out"></span>Logout	</a>
+		      </li>
+		    </ul>
+		    
+		  </div>
+		</nav>
+	</div>
+</body>
+</html>		

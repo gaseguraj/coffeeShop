@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
 <title>Spring Boot Thymeleaf Hello World Example</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -9,19 +11,15 @@
           rel="stylesheet" media="screen"/>
 </head>
 	<body>
+		<div th:replace="fragments/header :: header">*********MENU*************</div>
+	
 		<div class="container">
-		
-		<div>
-			<a href="../person/new">Create Person</a>
-			<a href="../person/all">List Person</a>
-		</div>
-
-		<h1><span th:text="${title}" th:remove="tag">Create</span> Person</h1>
+		<h1><span th:text="${title}" th:remove="tag">Create</span> Info</h1>
 		
 		<form method="post"  th:action="@{/person/} + ${action}">
 		  <div class="form-group">
-		    <label for="name">First Name</label>
-		    <input type="text" class="form-control"  th:field="*{person.firstName}" />
+		    <label for="firstName">First Name</label>
+		    <input type="text" class="form-control"  th:field="*{person.firstName}" required="required"/>
 		  </div>
 		  <div class="form-group">
 		    <label for="lastName">Last Name</label>
@@ -29,7 +27,7 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="email">Email</label>
-		    <input type="text" class="form-control" th:field="*{person.email}"/>
+		    <input type="text" class="form-control" th:field="*{person.email}" required="required"/>
 		  </div>
 		  <div class="form-group">
 		    <label for="phone">Phone</label>
@@ -37,11 +35,11 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="city">City</label>
-		    <input type="text" class="form-control" th:field="*{person.address.city}"/>
+		    <input type="text" class="form-control" th:field="*{person.address.city}" required="required"/>
 		  </div>
 		  <div class="form-group">
 		    <label for="state">State</label>
-		    <select class="form-control" th:field="*{person.address.state}">
+		    <select class="form-control" th:field="*{person.address.state}" >
 			  <option value="" selected="selected">Select a State</option>
 			  <option value="AL">Alabama</option>
 			  <option value="AK">Alaska</option>
@@ -98,7 +96,7 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="country">Country</label>
-		    <select class="form-control" th:field="*{person.address.country}">
+		    <select class="form-control" th:field="*{person.address.country}" required="required">
 				<option value="AF">Afghanistan</option>
 				<option value="AX">Åland Islands</option>
 				<option value="AL">Albania</option>
@@ -353,6 +351,10 @@
 		  <div class="form-group">
 		    <label for="zipcode">Zip Code</label>
 		    <input type="text" class="form-control" th:field="*{person.address.zipcode}"/>
+		  </div>
+		  <div class="form-group">
+		    <label for="password">Password</label>
+		    <input type="password" class="form-control" th:field="*{person.password}" required="required"/>
 		  </div>
 		  <button type="submit" class="btn btn-default">Submit</button>
 		  <input type="hidden" class="form-control" th:field="*{person.id}"/>

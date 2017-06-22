@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.coffee.domain.Person;
+import edu.mum.coffee.domain.Role;
 import edu.mum.coffee.repository.PersonRepository;
+import edu.mum.coffee.repository.RoleRepository;
 
 @Service
 @Transactional
@@ -15,6 +17,8 @@ public class PersonService {
 
 	@Autowired
 	private PersonRepository personRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
 	public Person savePerson(Person person) {
 		return personRepository.save(person);
@@ -35,5 +39,10 @@ public class PersonService {
 	public List<Person> getAll() {
 		return  personRepository.findAll() ;
 	}
+	
+	public Role saveRole(Role role) {
+		return roleRepository.save(role);
+	}
+	
 
 }
